@@ -1,0 +1,34 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="widht=device-width, initial-scale=1.0">
+	<title>Add Project</title>
+</head>
+<body>
+	{% include 'blog/navbar.html' %}
+
+	<form method="POST" enctype='multipart/form-data'>
+		{% csrf_token %}
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 ">
+						<h3 class="text-white">Add Project</h3>
+						{{form.media}}
+						{% for field in form %}
+
+							<label class="text-white form-label">{{field.label}}</label>
+							{{field}}
+						{% endfor %}
+					<input type="submit" name="" class="btn btn-outline-primary mb-4" value="Submit">
+				 </div>
+		</div>
+	</div>
+	</form>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+{% include 'blog/navbar.html' %}
+
+	<div class="container text-white">
+		<p>Name: {{message.name}}</p>
+		<p>Email: {{message.email}}</p>
+		<hr>
+		<p>Message {{message.body}}</p>
+
+
+	</div>
+</div>
+{% endblock %}
+</body>
+</html>

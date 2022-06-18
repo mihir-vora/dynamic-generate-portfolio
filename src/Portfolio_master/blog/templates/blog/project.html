@@ -1,0 +1,115 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="widht=device-width, initial-scale=1.0">
+
+	<title>Project Details</title>
+	<style type="text/css">
+		body {
+  background: #111 !important;
+}
+
+.notes_scroll {
+  height: 40%;
+  width:100%;
+  padding: 25px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+	</style>
+</head>
+<body>
+
+
+	<div class="container-fluid">
+		<div class="row ">
+			<div class=" thumbnail" >
+				<img src="{{project.thumbnail.url}}" class="img-responsive mt-4 ml-4 card-img-top  img-thumbnail img-fluid " width="800" height="345" alt="">
+			</div>
+			<div class="col-md-12 ml-1 text-white ">
+				<div class=" card-body ">
+					<h4 class=" text-capitalize">{{project.title}}</h4>
+				</div>
+				
+			</div>
+
+			{% if request.user.is_authenticated %}
+			<div class="col-md-12 edit--btn">
+					<a  href="{% url 'edit-project' project.id %}"><button class="btn btn-outline-warning float-right btn-md">Edit Project</button></a>
+			</div>
+			{% endif %}
+		</div>
+			<div class="project-body ml-4 mr-4">
+				<h5 class="text-white ">Project Introduction</h5>
+				<p class="text-white text-justify ">{{project.body|safe}}</p>
+			</div>
+	</div>
+
+	<div class="row " >
+		<div class="col-12 col-md-12 mx-auto">
+			<form class="form__container" method="POST">
+				{% csrf_token %}
+
+
+
+				<div class="shadow-sm p-4 mb-4 rounded bg-white "  >
+				{% if messages %}
+						<div class="alert alert-success fade show alert-dismissible" role="alert">
+							{% for message in messages %}
+								<a href="" class="close" data-dismiss="alert" aria-lable="Close" >&times;</a>
+								<strong {% if message.tags %} class="{{message.success}}" {% endif %} >{{message}}</strong>
+							{% endfor %}
+						</div>
+				{% endif %}
+					<h3 class="font-weight-bold">Commets</h3>
+					<div class="form--content " >
+						<div class="row ">
+							<div class="col-12  col-md-6 mt-4 ">
+								<h4 class="card-header border font-weight-bold">Add Comments</h4>
+								<div class="card">
+									<div class="card-body ">
+										{% for fields in form %}
+										<label for="{{fields.label}}">{{fields.label}}</label>
+										{{fields}}
+										{% endfor %}
+								<input type="submit" name="" value="Submit" class="btn btn-primary">
+									</div>
+								</div>
+							</div>
+							<style type="text/css">
+								.text {
+    max-width: 400px;
+}
+
+							</style>
+							<div class="col-12 col-md-6 mt-4 overflow-auto">
+								<h4 class="card-header border font-weight-bold ">{{count}} Comments </h4>
+								<div class="card notes_scroll " style="max-height: 19%;">
+									<div class="card-body ">
+										{% for add_comments in comments %}
+											<h6 class="card-text font-weight-bold ">
+												{{add_comments.name}}
+												<small>{{add_comments.created|timesince}}</small>
+											</h6>
+											<small class="card-text text-justify" style="color:gray">{{add_comments.body}}</small>
+										{% endfor %}
+
+									</div>
+										
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+{% endblock %}
+</body>
+</html>

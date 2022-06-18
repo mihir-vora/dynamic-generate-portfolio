@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add Skill</title>
+</head>
+<body>
+	{% include 'blog/navbar.html' %}
+	<div class="container">
+		<div class="container-fluid">
+			<form class="" method="POST">
+				{% csrf_token %}
+
+				<div class="row">
+				{% for fields in form %}
+					<div class="col-md-12">
+						<label for="{{fields.label}}" class="text-white">{{fields.label}}</label>
+						{{fields}}
+					</div>
+				{% endfor %}
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+{% endblock %}
+</html>

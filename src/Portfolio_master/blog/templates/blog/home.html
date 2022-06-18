@@ -1,0 +1,174 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Home</title>
+    <style type="text/css">
+    
+
+
+.card {
+  background: #222;
+  color: rgba(250, 250, 250, 0.8);
+  margin-bottom: 2rem;
+}
+.card:hover, .card-footer:hover {
+      border: 1px solid #dd2476;
+
+    }
+
+
+
+
+.card img {
+  width: 100%;
+}
+
+
+.card-title {
+  font-size: 18px;
+  color: grey;
+  font-family: verdana, sans;
+}
+.card {
+    border : 1px solid lightgrey;
+}
+
+.card-footer {
+  padding: 15px;
+  border-top: 1px solid lightgrey;
+}
+
+
+    </style>
+
+</head>
+    {% include 'blog/navbar.html' %}
+<body>
+         {% if messages %}
+            <div class="alert alert-success messages m-4  alert-dismissible mt-4 ">
+                    {% for message in messages %}
+                    <a href="#" class="close " data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</strong>
+
+
+                    {% endfor %}
+            </div>
+        {% endif  %}
+    
+   <div class="container  mt-4">
+        <div class="container-fluid" style="gap:2rem; justify-content: flex-start;display: flex;">
+            <div class="card-group">
+                <div class="row " >
+            {% for projects in project %}
+                    <div class="col-md-4">
+                        <div class="card " style="width: 18rem;">
+                            <img src="{{projects.thumbnail.url }}" height="300"  class="card-img-top" alt="Project img">
+                            <div class="card-body">
+                                <h4 class="card-text text-capitalize">{{projects.title}}</h4>
+                                <h6 class="card-subtitle mb-2 text-muted">{{projects.created}}</h6>
+                                <p class="card-text text-justify">{{projects.body | truncatechars:50|safe}}</p>
+
+                            </div>
+                                <div class="card-footer">
+                                    <a href="{% url 'project' projects.id %}" class="card-link">Read More</a>
+                                </div>
+                        </div>
+                    </div>
+            {% empty %}
+                <h5 class="text-white">There is no project</h5>
+            {% endfor %}
+                </div>
+            </div>
+          
+</div>
+</div>
+
+<section class="section--1" style="background-color: white;">   
+    <div class="skills--container pt-4 pb-4" >
+        <div class="container  " >
+        <h4 class="card-text font-weight-bold" style="margin-left: 15%;">About My Skill</h4>
+
+            {% for detailedSkills in detailedSkills %}
+            <div class="skill__body " style="margin-top: 2em;margin-bottom: 2em;display: flex;gap:2em">
+                <div class="" style="margin-left: 20%;">
+                    {% load staticfiles %}
+
+                    <img src="{{detailedSkills.image.url}}" width="60" height="60" class="rounded-circle d-inline-block  mr-3"><span class="font-weight-bold text-capitalize">{{detailedSkills.title}}</span>
+                    <p class=" mt-2 mb-2 text-justify justify-content">{{detailedSkills.body}}</p>
+             
+                </div>
+            </div>  
+            {% endfor %}
+
+
+            <div class="skill__tag">
+                <h4 class="card-text font-weight-bold " style="margin-left: 15%;">Other Skill</h4>
+                <div class="" style="margin-left: 20%;">
+                    {%  for otherskill in otherskill %}
+                        <button type="" class="btn font-weight-bold   mb-2 ml-sm-2 btn-outline-primary btn-sm text-capitalize">{{otherskill.title}}</button>
+                    {% endfor %}
+                </div>
+            </div>  
+  
+  </div>
+</div>
+
+</section>
+
+<!-- <section class="" style="background-color: white;">
+    <div class="endorsement--container pt-sm-2 pb-4">
+        <div class="container "  >
+          
+              <h4 class="card-text font-weight-bold mr-4 d-inline-block" style="margin-left: 15%;">Endorsements </h4>
+                 
+                
+            <div class="card-group">
+             <div class="card" style="background-color: white; margin-left: 15%;">
+                 {% for endorsements in endorsement %}
+                <div class="card-body">
+                    <span class="font-weight-bold card-text text-dark">{{endorsements.name}}</span>
+                    <p class="card-text text-dark text-justify content-justify">{{endorsements.body}}</p>
+                <hr>
+                </div>
+                {% endfor %}
+               
+              <a href="{% url 'add-endorsement' %}" class="btn  btn-primary ">Add Endorsement</a>
+        
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+ -->
+
+<section class="">
+    <div class="container">
+        <form method="POST" class="contact__form">
+            {% csrf_token %}
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h3 class="text-white">Message</h3>
+                    {% for fields in form %}
+                        <label class="text-white" for="{{fields.balel}}">{{fields.label}}</label>
+                        {{fields}}
+                  
+                    {% endfor %}
+                </div>
+            </div>
+
+            <input type="submit" class="btn btn-primary mb-4" value="Submit">
+        </form>
+    </div>
+</section>
+
+
+{% endblock %}
+</body>
+</html>

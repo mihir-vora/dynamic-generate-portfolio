@@ -1,0 +1,79 @@
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap -->
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-white">
+  <a href="{% url 'home' %}" class="navbar-brand font-weight-bold">My Portfolio</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-control="navbarSupportedContent" aria-expaned="false" aria-label="Toggle Navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a href="{% url 'home' %}" class="nav-link font-weight-bold">Home</a>
+        </li>
+
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a href="{% url 'inbox' %}" class="nav-link font-weight-bold ">Inbox</a>
+        </li>
+ 
+        <li class="nav-item">
+            <a href="{% url 'add-project' %}" class="nav-link font-weight-bold">Add Project</a>
+        </li>
+    
+            <li class="nav-item">
+                <a href="{% url 'add-skill' %}" class="font-weight-bold nav-link">Skill</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link font-weight-bold" href="{% url 'chartPage' %}">Votes</a>
+            </li>
+        {% endif %}
+
+     
+    </ul> 
+        <form class="form-inline my-2 my-lg-0 ">
+            <input type="search" name="get_item" placeholder="Search..." class="form-control mr-sm-2" aria-label="Search">
+            <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">Search</button>
+        </form>
+  </div>
+</nav>
+<script type="text/javascript">
+    (function($) { // Begin jQuery
+  $(function() { // DOM ready
+    // If a link has a dropdown, add sub menu toggle.
+    $('nav ul li a:not(:only-child)').click(function(e) {
+      $(this).siblings('.nav-dropdown').toggle();
+      // Close one dropdown when selecting another
+      $('.nav-dropdown').not($(this).siblings()).hide();
+      e.stopPropagation();
+    });
+    // Clicking away from dropdown will remove the dropdown class
+    $('html').click(function() {
+      $('.nav-dropdown').hide();
+    });
+    // Toggle open and close nav styles on click
+    $('#nav-toggle').click(function() {
+      $('nav ul').slideToggle();
+    });
+    // Hamburger to X toggle
+    $('#nav-toggle').on('click', function() {
+      this.classList.toggle('active');
+    });
+  }); // end DOM ready
+})(jQuery); // end jQuery
+</script>
+{% endblock %}
+</body>
+</html>
